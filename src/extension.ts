@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { validateTable } from './tables';
+import { validateTable } from './core/validators/table';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -17,12 +17,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const content = activeTab?.document.getText();
 
+
 		if(!content) {
 			vscode.window.showErrorMessage('El archivo tiene contenido');
 			return;
 		}
 
-		types.map((type) => {
+		for(const type of types) {
+
 			const isType = content?.includes(type);
 
 			if(!isType) {
@@ -36,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			}
 
-		});	
+		};	
 
 	});
 

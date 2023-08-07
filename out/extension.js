@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
-const tables_1 = require("./tables");
+const table_1 = require("./core/validators/table");
 function activate(context) {
     const types = [
         'TABLE'
@@ -18,7 +18,7 @@ function activate(context) {
             vscode.window.showErrorMessage('El archivo tiene contenido');
             return;
         }
-        types.map((type) => {
+        for (const type of types) {
             const isType = content?.includes(type);
             if (!isType) {
                 vscode.window.showErrorMessage('No hay un tipo de operacion permitida. Solo de tipo: ' + types.join(', '));
@@ -26,10 +26,11 @@ function activate(context) {
             }
             if (isType) {
                 if (type === 'TABLE') {
-                    (0, tables_1.validateTable)(content);
+                    (0, table_1.validateTable)(content);
                 }
             }
-        });
+        }
+        ;
     });
     context.subscriptions.push(validateSQL);
 }
